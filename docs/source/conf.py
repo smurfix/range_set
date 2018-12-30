@@ -51,7 +51,6 @@ extensions = [
 
 intersphinx_mapping = {
     "python": ('https://docs.python.org/3', None),
-    "trio": ('https://trio.readthedocs.io/en/stable', None),
 }
 
 autodoc_member_order = "bysource"
@@ -70,8 +69,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'ConSet'
-copyright = 'The ConSet authors'
-author = 'The ConSet authors'
+copyright = '(c) 2019 Matthias Urlichs'
+author = 'Matthias Urlichs'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -169,7 +168,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'conset.tex', 'Trio Documentation',
+    (master_doc, 'conset.tex', 'ConSet Documentation',
      author, 'manual'),
 ]
 
@@ -191,6 +190,6 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'conset', 'ConSet Documentation',
-     author, 'ConSet', 'Efficient storagge for sets of mostly-consecutive integers',
+     author, 'ConSet', 'Efficient storage for sets of mostly-consecutive integers',
      'Miscellaneous'),
 ]

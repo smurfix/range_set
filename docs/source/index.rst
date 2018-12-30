@@ -4,12 +4,14 @@
    contain the root `toctree` directive.
 
 
-==================================================================
-ConSet: Efficient storagge for sets of mostly-consecutive integers
-==================================================================
+=================================================================
+ConSet: Efficient storage for sets of mostly-consecutive integers
+=================================================================
 
 .. toctree::
    :maxdepth: 2
+
+   main.rst
 
    history.rst
 
