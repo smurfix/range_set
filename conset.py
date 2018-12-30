@@ -135,7 +135,7 @@ class ConSet:
 
 	def present(self, x, y):
 		"""Check if the range [x…y) is contained in the set."""
-		if not len(self._set):
+		if not self._set:
 			return False
 		p,pi = self._find(x)
 		q,qi = self._find(y-1)
@@ -144,7 +144,7 @@ class ConSet:
 
 	def absent(self, x, y):
 		"""Check if no item in the range [x…y) is contained in the set."""
-		if not len(self._set):
+		if not self._set:
 			return False
 		p,pi = self._find(x)
 		if pi:
@@ -201,7 +201,7 @@ class ConSet:
 		del s[p+1:q]
 
 	def __contains__(self, x):
-		if not len(self._set):
+		if not self._set:
 			return False
 		_,f = self._find(x)
 		return f
@@ -289,6 +289,12 @@ class ConSet:
 		return self.issubset(other, False)
 
 	def issuperset(self, other, proper=False):
+		"""Test if every element of the other set is in this one.
+
+		Args:
+		  ``other``: The set this should be a subset of.
+		  ``proper``: If set, return ``False`` if the sets are identical.
+		"""
 		return other.issubset(self, proper=proper)
 
 	def __eq__(self, other):
@@ -300,16 +306,26 @@ class ConSet:
 	def _ge__(self, other):
 		return other.issubset(self, False)
 
+	def span(self):
+		"""Returns the smallest ConSet encapsulating all items in this set"""
+		s = self._set
+		r = ConSet()
+		if s:
+			r._set.append((s[0][0], s[-1][1]))
+		return r
+
 	### TODO:
 	### all of the following methods are somewhat inefficient and should be
 	### replaced with direct implementations.
 
 	def update(self, *others):
+		"""Update the set, adding elements from all others."""
 		for o in others:
 			self |= o
 		return self
 
 	def union(self, *others):
+		"""Return a new set with elements from the set and all others."""
 		s = self.copy()
 		s.update(*others)
 		return s
@@ -322,11 +338,13 @@ class ConSet:
 		return s
 
 	def intersection(self, *others):
+		"""Return a new set with elements common to the set and all others."""
 		s = self.copy()
 		s.intersection_update(*others)
 		return s
 
 	def intersection_update(self, *others):
+		"""Update the set, keeping only elements found in it and all others."""
 		for o in others:
 			self &= o
 		return self
@@ -348,11 +366,13 @@ class ConSet:
 		return self
 
 	def difference(self, *others):
+		"""Return a new set with elements in the set that are not in the others."""
 		s = self.copy()
 		s.difference_update(*others)
 		return s
 
 	def difference_update(self, *others):
+		"""Update the set, removing elements found in others."""
 		for o in others:
 			self -= o
 		return self
@@ -374,11 +394,13 @@ class ConSet:
 		return self
 
 	def symmetric_difference(self, *others):
+		"""Return a new set with elements in either this set or ``other`` but not both."""
 		s = self.copy()
 		s.symmetric_difference_update(*others)
 		return s
 
 	def symmetric_difference_update(self, *others):
+		"""Update the set, keeping only elements found in either set, but not in both."""
 		for o in others:
 			self ^= o
 		return self

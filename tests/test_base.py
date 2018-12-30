@@ -143,6 +143,10 @@ def test_cmp_etc():
     f = ConSet((  3,4,  7,8,  10))
     g = ConSet((    4,  7,8,  10))
 
+    assert b.span() == ConSet(((1,4),))
+    assert c.span() == ConSet(((1,9),))
+    assert g.span() == ConSet(((4,11),))
+
     assert c&g == ConSet((4,7,8))
     assert c|g == ConSet((1,3,4,5,7,8,10))
     assert b.isdisjoint(g)
