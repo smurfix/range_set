@@ -1,0 +1,5 @@
+range-set (0.1.0-1) smurf; urgency=low
+
+  * source package automatically created by stdeb 0.8.5
+
+ -- Matthias Urlichs <matthias@urlichs.de>  Sun, 30 Dec 2018 22:29:43 +0100
