@@ -57,7 +57,7 @@ pip install -U pip setuptools wheel
 
 if [ "$CHECK_FORMATTING" = "1" ]; then
     pip install yapf==${YAPF_VERSION}
-    if ! yapf -rpd setup.py conset; then
+    if ! yapf -rpd setup.py range_set.py; then
         cat <<EOF
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -65,7 +65,7 @@ if [ "$CHECK_FORMATTING" = "1" ]; then
 Formatting problems were found (listed above). To fix them, run
 
    pip install yapf==${YAPF_VERSION}
-   yapf -rpi setup.py conset
+   yapf -rpi setup.py range_set.py
 
 in your local checkout.
 
@@ -93,7 +93,7 @@ else
     mkdir empty
     cd empty
 
-    pytest -W error -ra -v --pyargs conset --cov=conset --cov-config=../.coveragerc --verbose
+    pytest -W error -ra -v --pyargs tests --cov=range_set --cov-config=../.coveragerc --verbose
 
     bash <(curl -s https://codecov.io/bash)
 fi

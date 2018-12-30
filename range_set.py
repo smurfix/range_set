@@ -1,10 +1,10 @@
-"""Top-level package for ConSet."""
+"""Top-level package for RangeSet."""
 
 __version__ = "0.1.0"
 
-class ConSet:
+class RangeSet:
 	"""
-	A ConSet works exactly like a Python set, with these exceptions:
+	A RangeSet works exactly like a Python set, with these exceptions:
 
     * iterating a set yields a sequence of ``(start, end)`` tuples.
       The start value is part of the set while the end value is not.
@@ -14,7 +14,7 @@ class ConSet:
     * Likewise, initialization works with an iterator that yields single
 	  values or ``(start, end)`` tuples. These tuples may overlap.
 
-    * There is no FrozenConSet class.
+    * There is no FrozenRangeSet class.
 
     * You can only store integers.
 
@@ -75,7 +75,7 @@ class ConSet:
 
 	def copy(self):
 		"""Return a new set with a shallow copy of s."""
-		s = ConSet()
+		s = RangeSet()
 		s._set = self._set[:]
 		return s
 
@@ -307,9 +307,9 @@ class ConSet:
 		return other.issubset(self, False)
 
 	def span(self):
-		"""Returns the smallest ConSet encapsulating all items in this set"""
+		"""Returns the smallest RangeSet encapsulating all items in this set"""
 		s = self._set
-		r = ConSet()
+		r = RangeSet()
 		if s:
 			r._set.append((s[0][0], s[-1][1]))
 		return r

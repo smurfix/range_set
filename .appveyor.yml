@@ -23,6 +23,6 @@ test_script:
   - "mkdir empty"
   - "cd empty"
   # Make sure it's being imported from where we expect
-  - "python -c \"import os, conset; print(os.path.dirname(conset.__file__))\""
-  - "python -u -m pytest -W error -ra -v -s --pyargs conset --cov=conset --cov-config=../.coveragerc"
+  - "python -c \"import os, range_set; print(os.path.dirname(range_set.__file__))\""
+  - "python -u -m pytest -W error -ra -v -s --pyargs range_set --cov=range_set --cov-config=../.coveragerc"
   - "codecov"

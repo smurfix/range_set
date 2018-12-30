@@ -9,7 +9,6 @@ all:
 # need to use python3 sphinx-build
 PATH := /usr/share/sphinx/scripts/python3:${PATH}
 
-PACKAGE = conset
 PYTHON ?= python3
 export PYTHONPATH=$(shell pwd)
 
@@ -39,7 +38,7 @@ livehtml: docs
 	sphinx-autobuild $(AUTOSPHINXOPTS) $(ALLSPHINXOPTS) $(SPHINXBUILDDIR)
 
 test:
-	$(PYTEST) $(PACKAGE) $(TEST_OPTIONS)
+	$(PYTEST) tests $(TEST_OPTIONS)
 
 
 tag:

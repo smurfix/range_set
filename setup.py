@@ -1,19 +1,19 @@
 from setuptools import setup, find_packages
 
-exec(open("conset.py", encoding="utf-8").read())
+exec(open("range_set.py", encoding="utf-8").read())
 
 LONG_DESC = open("README.rst", encoding="utf-8").read()
 
 setup(
-    name="conset",
+    name="range_set",
     version=__version__,
     description="Efficient storage for sets of mostly-consecutive integers",
-    url="https://github.com/smurfix/conset",
+    url="https://github.com/smurfix/range_set",
     long_description=LONG_DESC,
     author="Matthias Urlichs",
     author_email="matthias@urlichs.de",
     license="MIT -or- Apache License 2.0",
-    py_modules=["conset"],
+    py_modules=["range_set"],
     keywords=[
         "set", "coalesce", "compact", "consecutive",
     ],

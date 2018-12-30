@@ -1,6 +1,6 @@
 Release history
 ===============
 
-.. currentmodule:: conset
+.. currentmodule:: range_set
 
 .. towncrier release notes start

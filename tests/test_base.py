@@ -1,4 +1,4 @@
-from conset import ConSet
+from range_set import RangeSet
 from itertools import permutations
 import pytest
 
@@ -61,12 +61,12 @@ _test_disjoint = (
 def test_create():
     for i,o in _test_create:
         for ii in permutations(i):
-            c = ConSet(ii)
+            c = RangeSet(ii)
             assert list(c) == o, (ii,o)
 
 def test_remove():
     for i,r,o in _test_remove:
-        c = ConSet(i)
+        c = RangeSet(i)
         try:
             if isinstance(r,tuple):
                 c.remove(*r)
@@ -78,12 +78,12 @@ def test_remove():
 
 def test_disjoint():
     for i,j,o in _test_disjoint:
-        i = ConSet(i)
-        j = ConSet(j)
+        i = RangeSet(i)
+        j = RangeSet(j)
         assert o == i.isdisjoint(j)
         assert o == j.isdisjoint(i)
 
-cs = ConSet((2,5,6,7,9,10))
+cs = RangeSet((2,5,6,7,9,10))
 
 def test_inside():
     assert 0 not in cs
@@ -120,7 +120,7 @@ def test_absence():
     assert not cs.absent(3,6)
 
 def test_pop():
-    c = ConSet((1,2,5,6,7))
+    c = RangeSet((1,2,5,6,7))
     assert c.pop() == 7
     assert c.pop() == 6
     assert c.pop() == 5
@@ -130,25 +130,25 @@ def test_pop():
         assert c.pop()
 
 def test_len():
-    c = ConSet()
+    c = RangeSet()
     assert len(c) == 0
     assert len(cs) == 3
     assert cs.count() == 6
 
 def test_cmp_etc():
-    b = ConSet((1,3))
-    c = ConSet((1,3,4,5,7,8))
-    d = ConSet((  3,4,  7,8))
-    e = ConSet((  3,4,  7,8,9))
-    f = ConSet((  3,4,  7,8,  10))
-    g = ConSet((    4,  7,8,  10))
+    b = RangeSet((1,3))
+    c = RangeSet((1,3,4,5,7,8))
+    d = RangeSet((  3,4,  7,8))
+    e = RangeSet((  3,4,  7,8,9))
+    f = RangeSet((  3,4,  7,8,  10))
+    g = RangeSet((    4,  7,8,  10))
 
-    assert b.span() == ConSet(((1,4),))
-    assert c.span() == ConSet(((1,9),))
-    assert g.span() == ConSet(((4,11),))
+    assert b.span() == RangeSet(((1,4),))
+    assert c.span() == RangeSet(((1,9),))
+    assert g.span() == RangeSet(((4,11),))
 
-    assert c&g == ConSet((4,7,8))
-    assert c|g == ConSet((1,3,4,5,7,8,10))
+    assert c&g == RangeSet((4,7,8))
+    assert c|g == RangeSet((1,3,4,5,7,8,10))
     assert b.isdisjoint(g)
     assert not b.isdisjoint(e)
 
@@ -200,18 +200,18 @@ def test_cmp_etc():
     assert not d.issuperset(c, proper=False)
     assert not d.issuperset(c, proper=True)
 
-    assert c == ConSet((1,3,4,5,7,8))
-    assert d == ConSet((  3,4,  7,8))
-    assert e == ConSet((  3,4,  7,8,9))
-    assert f == ConSet((  3,4,  7,8,  10))
+    assert c == RangeSet((1,3,4,5,7,8))
+    assert d == RangeSet((  3,4,  7,8))
+    assert e == RangeSet((  3,4,  7,8,9))
+    assert f == RangeSet((  3,4,  7,8,  10))
 
 def test_union():
-    c = ConSet((1,3,4,5,7,8))
-    d = ConSet((  3,4,  7,8))
-    e = ConSet((  3,4,  7,8,9))
-    f = ConSet((1,3,4,5,7,8,9))
-    g = ConSet((      5,7))
-    h = ConSet((1,))
+    c = RangeSet((1,3,4,5,7,8))
+    d = RangeSet((  3,4,  7,8))
+    e = RangeSet((  3,4,  7,8,9))
+    f = RangeSet((1,3,4,5,7,8,9))
+    g = RangeSet((      5,7))
+    h = RangeSet((1,))
     
     assert c.union(d) == c
     assert d.union(c) == c
@@ -228,8 +228,8 @@ def test_union():
     assert d|c == c
     assert c|e == f
 
-    assert d == ConSet((  3,4,  7,8))
-    assert e == ConSet((  3,4,  7,8,9))
+    assert d == RangeSet((  3,4,  7,8))
+    assert e == RangeSet((  3,4,  7,8,9))
 
     dd = d
     d |= c
@@ -240,33 +240,33 @@ def test_union():
     e.union_update(g,h)
     assert e == f
 
-    assert c == ConSet((1,3,4,5,7,8))
-    assert g == ConSet((      5,7))
-    assert h == ConSet((1,))
-    assert f == ConSet((1,3,4,5,7,8,9))
+    assert c == RangeSet((1,3,4,5,7,8))
+    assert g == RangeSet((      5,7))
+    assert h == RangeSet((1,))
+    assert f == RangeSet((1,3,4,5,7,8,9))
 
 def test_intersection():
-    c = ConSet((1,3,4,5,7,8))
-    d = ConSet((  3,4,  7,8))
-    e = ConSet((  3,4,  7,8,9))
-    f = ConSet((1,3,4,5,7,8,9))
-    g = ConSet((      5,7))
-    h = ConSet((1,))
+    c = RangeSet((1,3,4,5,7,8))
+    d = RangeSet((  3,4,  7,8))
+    e = RangeSet((  3,4,  7,8,9))
+    f = RangeSet((1,3,4,5,7,8,9))
+    g = RangeSet((      5,7))
+    h = RangeSet((1,))
     
     assert c.intersection(d) == d
     assert d.intersection(c) == d
     assert c.intersection(e) == d
     assert e.intersection(c) == d
-    assert f.intersection(e,g) == ConSet((7,))
+    assert f.intersection(e,g) == RangeSet((7,))
 
     assert c&d == d
     assert d&c == d
     assert c&e == d
 
-    assert c == ConSet((1,3,4,5,7,8))
-    assert f == ConSet((1,3,4,5,7,8,9))
-    assert g == ConSet((      5,7))
-    assert h == ConSet((1,))
+    assert c == RangeSet((1,3,4,5,7,8))
+    assert f == RangeSet((1,3,4,5,7,8,9))
+    assert g == RangeSet((      5,7))
+    assert h == RangeSet((1,))
 
     cx = c.copy()
     cc = c
@@ -276,40 +276,40 @@ def test_intersection():
     assert c == d
 
     cx.intersection_update(e,g)
-    assert cx == ConSet((7,))
+    assert cx == RangeSet((7,))
 
     f.intersection_update(e)
     assert f == e
 
-    assert d == ConSet((  3,4,  7,8))
-    assert e == ConSet((  3,4,  7,8,9))
+    assert d == RangeSet((  3,4,  7,8))
+    assert e == RangeSet((  3,4,  7,8,9))
 
-    assert e == ConSet((  3,4,  7,8,9))
+    assert e == RangeSet((  3,4,  7,8,9))
 
 def test_difference():
-    c = ConSet((1,3,4,5,7,8))
-    d = ConSet((  3,4,  7,8))
-    e = ConSet((  3,4,  7,8,9))
-    f = ConSet((1,3,4,5,7,8,9))
-    g = ConSet((      5,))
-    h = ConSet((1,))
+    c = RangeSet((1,3,4,5,7,8))
+    d = RangeSet((  3,4,  7,8))
+    e = RangeSet((  3,4,  7,8,9))
+    f = RangeSet((1,3,4,5,7,8,9))
+    g = RangeSet((      5,))
+    h = RangeSet((1,))
     
     assert c.difference(d,h) == g
-    assert d.difference(c) == ConSet()
-    assert f.difference(f) == ConSet()
-    assert d.difference(f) == ConSet()
+    assert d.difference(c) == RangeSet()
+    assert f.difference(f) == RangeSet()
+    assert d.difference(f) == RangeSet()
     assert c.difference(d,g) == h
 
     assert c-d-h == g
-    assert d-c == ConSet()
-    assert f-f == ConSet()
+    assert d-c == RangeSet()
+    assert f-f == RangeSet()
     assert g-h == g
     assert h-g == h
 
-    assert c == ConSet((1,3,4,5,7,8))
-    assert f == ConSet((1,3,4,5,7,8,9))
-    assert g == ConSet((      5,))
-    assert h == ConSet((1,))
+    assert c == RangeSet((1,3,4,5,7,8))
+    assert f == RangeSet((1,3,4,5,7,8,9))
+    assert g == RangeSet((      5,))
+    assert h == RangeSet((1,))
 
     cc = c
     c -= g|h
@@ -324,33 +324,33 @@ def test_difference():
     ff.difference_update(g,h)
     assert ff == e
 
-    assert d == ConSet((  3,4,  7,8))
-    assert e == ConSet((  3,4,  7,8,9))
+    assert d == RangeSet((  3,4,  7,8))
+    assert e == RangeSet((  3,4,  7,8,9))
 
 def test_symmetric_difference():
-    c = ConSet((1,3,4,5,7,8))
-    d = ConSet((  3,4,  7,8))
-    e = ConSet((  3,4,  7,8,9))
-    f = ConSet((1,3,4,5,7,8,9))
-    g = ConSet((      5,))
-    h = ConSet((1,))
+    c = RangeSet((1,3,4,5,7,8))
+    d = RangeSet((  3,4,  7,8))
+    e = RangeSet((  3,4,  7,8,9))
+    f = RangeSet((1,3,4,5,7,8,9))
+    g = RangeSet((      5,))
+    h = RangeSet((1,))
     
-    assert c.symmetric_difference(f) == ConSet((9,))
-    assert f.symmetric_difference(c) == ConSet((9,))
+    assert c.symmetric_difference(f) == RangeSet((9,))
+    assert f.symmetric_difference(c) == RangeSet((9,))
     assert c.symmetric_difference(d,h) == g
     assert e.symmetric_difference(f) == g|h
     assert e.symmetric_difference(f,g) == h
     assert e.symmetric_difference(f,h) == g
     assert e.symmetric_difference(g,h) == f
     assert f.symmetric_difference(g,h) == e
-    assert d.symmetric_difference(d) == ConSet()
+    assert d.symmetric_difference(d) == RangeSet()
 
     assert c^d^h == g
     assert e^f == g|h
 
-    assert c == ConSet((1,3,4,5,7,8))
-    assert f == ConSet((1,3,4,5,7,8,9))
-    assert g == ConSet((      5,))
+    assert c == RangeSet((1,3,4,5,7,8))
+    assert f == RangeSet((1,3,4,5,7,8,9))
+    assert g == RangeSet((      5,))
 
     gx = g.copy()
     gg = g
@@ -366,8 +366,8 @@ def test_symmetric_difference():
     ff.symmetric_difference_update(gx,h)
     assert ff == e
 
-    assert d == ConSet((  3,4,  7,8))
-    assert e == ConSet((  3,4,  7,8,9))
-    assert gx == ConSet((5,))
-    assert h == ConSet((1,))
+    assert d == RangeSet((  3,4,  7,8))
+    assert e == RangeSet((  3,4,  7,8,9))
+    assert gx == RangeSet((5,))
+    assert h == RangeSet((1,))
 

@@ -68,7 +68,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'ConSet'
+project = 'RangeSet'
 copyright = '(c) 2019 Matthias Urlichs'
 author = 'Matthias Urlichs'
 
@@ -77,8 +77,8 @@ author = 'Matthias Urlichs'
 # built documents.
 #
 # The short X.Y version.
-import conset
-version = conset.__version__
+import range_set
+version = range_set.__version__
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -141,7 +141,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'conset-doc'
+htmlhelp_basename = 'range_set-doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -168,7 +168,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'conset.tex', 'ConSet Documentation',
+    (master_doc, 'range_set.tex', 'RangeSet Documentation',
      author, 'manual'),
 ]
 
@@ -178,7 +178,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'conset', 'ConSet Documentation',
+    (master_doc, 'range_set', 'RangeSet Documentation',
      [author], 1)
 ]
 
@@ -189,7 +189,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'conset', 'ConSet Documentation',
-     author, 'ConSet', 'Efficient storage for sets of mostly-consecutive integers',
+    (master_doc, 'range_set', 'RangeSet Documentation',
+     author, 'RangeSet', 'Efficient storage for sets of mostly-consecutive integers',
      'Miscellaneous'),
 ]

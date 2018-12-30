@@ -4,9 +4,9 @@
    contain the root `toctree` directive.
 
 
-=================================================================
-ConSet: Efficient storage for sets of mostly-consecutive integers
-=================================================================
+===================================================================
+RangeSet: Efficient storage for sets of mostly-consecutive integers
+===================================================================
 
 .. toctree::
    :maxdepth: 2

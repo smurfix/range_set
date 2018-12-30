@@ -48,23 +48,23 @@ To run tests
 * Install requirements: ``pip install -r ci/test-requirements.txt``
   (possibly in a virtualenv)
 
-* Actually run the tests: ``pytest conset``
+* Actually run the tests: ``pytest range_set``
 
 
 To run yapf
 -----------
 
 * Show what changes yapf wants to make: ``yapf -rpd setup.py
-  conset``
+  range_set.py``
 
 * Apply all changes directly to the source tree: ``yapf -rpi setup.py
-  conset``
+  range_set.py``
 
 
 To make a release
 -----------------
 
-* Update the version in ``conset/_version.py``
+* Update the version in ``range_set.py``
 
 * Run ``towncrier`` to collect your release notes.
 

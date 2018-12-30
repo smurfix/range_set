@@ -1,5 +1,5 @@
 [tool.towncrier]
-package = "conset"
+package = "range_set"
 filename = "docs/source/history.rst"
 directory = "newsfragments"
 underlines = ["-", "~", "^"]
