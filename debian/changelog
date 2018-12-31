@@ -1,3 +1,9 @@
+range-set (0.2.0-1) unstable; urgency=medium
+
+  * Add __getstate__ and __setstate__.
+
+ -- Matthias Urlichs <matthias@urlichs.de>  Mon, 31 Dec 2018 19:08:42 +0100
+
 range-set (0.1.0-1) smurf; urgency=low
 
   * source package automatically created by stdeb 0.8.5

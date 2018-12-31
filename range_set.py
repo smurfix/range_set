@@ -1,6 +1,6 @@
 """Top-level package for RangeSet."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 
 class RangeSet:
@@ -36,6 +36,27 @@ class RangeSet:
 
     def __repr__(self):
         return "%s(%s)" % (self.__class__.__name__, repr(self._set))
+
+    def __getstate__(self):
+        def state():
+            for x,y in self._set:
+                if x+1 == y:
+                    yield x
+                else:
+                    yield (x,y)
+        return list(state())
+
+    def __setstate__(self, state):
+        self._set = s = []
+        for x in state:
+            if isinstance(x,list):
+                assert len(x) == 2
+                s.append((x[0],x[1]))
+            elif isinstance(x,tuple):
+                assert len(x) == 2
+                s.append(x)
+            else:
+                s.append((x,x+1))
 
     def _find(self, x):
         """Return the position of x within the array.
