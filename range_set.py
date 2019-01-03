@@ -345,6 +345,7 @@ class RangeSet:
         for o in others:
             self |= o
         return self
+
     __iadd__ = update
 
     def union(self, *others):
@@ -352,6 +353,7 @@ class RangeSet:
         s = self.copy()
         s.update(*others)
         return s
+
     __add__ = union
 
     union_update = update
