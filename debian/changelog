@@ -1,3 +1,9 @@
+range-set (0.3.0-1) unstable; urgency=medium
+
+  * Add __add__ and __iadd__.
+
+ -- Matthias Urlichs <matthias@urlichs.de>  Thu, 03 Jan 2019 11:40:10 +0100
+
 range-set (0.2.0-1) unstable; urgency=medium
 
   * Add __getstate__ and __setstate__.

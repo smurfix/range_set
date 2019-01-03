@@ -1,6 +1,6 @@
 """Top-level package for RangeSet."""
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 
 class RangeSet:
@@ -345,12 +345,14 @@ class RangeSet:
         for o in others:
             self |= o
         return self
+    __iadd__ = update
 
     def union(self, *others):
         """Return a new set with elements from the set and all others."""
         s = self.copy()
         s.update(*others)
         return s
+    __add__ = union
 
     union_update = update
 
