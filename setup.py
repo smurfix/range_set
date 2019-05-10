@@ -1,12 +1,11 @@
 from setuptools import setup
 
-exec(open("range_set.py", encoding="utf-8").read())
-
 LONG_DESC = open("README.rst", encoding="utf-8").read()
 
 setup(
     name="range_set",
-    version=__version__,  # noqa: F821
+    use_scm_version={"version_scheme": "guess-next-dev", "local_scheme": "dirty-tag"},
+    setup_requires=["setuptools_scm"],
     description="Efficient storage for sets of mostly-consecutive integers",
     url="https://github.com/smurfix/range_set",
     long_description=LONG_DESC,
