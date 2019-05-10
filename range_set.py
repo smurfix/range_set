@@ -154,7 +154,6 @@ class RangeSet:
         Like ``remove`` but does not raise an error if the item (or range)
         is not present.
         """
-
         self.remove(x, y, error=False)
 
     def present(self, x, y):
@@ -322,10 +321,10 @@ class RangeSet:
     def __eq__(self, other):
         return self._set == other._set
 
-    def _gt__(self, other):
+    def __gt__(self, other):
         return other.issubset(self, True)
 
-    def _ge__(self, other):
+    def __ge__(self, other):
         return other.issubset(self, False)
 
     def span(self):
