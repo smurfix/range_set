@@ -11,24 +11,7 @@ Package: python3-range-set
 Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}
 Description: Efficient storage for sets of mostly-consecutive integers
- RangeSet
- ======
- .
- License: Your choice of MIT or Apache License 2.0
- .
- ---------
- .
  Python Sets are nice to work with, but very inefficient if you need a large
  set with mostly-consecutive integers. The RangeSet class provides efficient
  handling and storage for these sets.
- .
- Non-integers?
- =============
- .
- RangeSet works with any class whose instances are
- .
- * comparable
- .
- * step-able, i.e. you can add 1 to them / subtract 1 from them.
- .
 
