@@ -1,23 +1,20 @@
 #!/usr/bin/make -f
 
-.PHONY: doc test update all tag pypi upload
+PACKAGE = range-set
+PYPI ?= $(PACKAGE)
 
-all:
-		@echo "Please use 'python setup.py'."
-		@exit 1
-
-# need to use python3 sphinx-build
-PATH := /usr/share/sphinx/scripts/python3:${PATH}
+export PYTHONPATH := $(PYTHONPATH)$(if $(PYTHONPATH),:)$(shell pwd)
 
 PYTHON ?= python3
-export PYTHONPATH=$(shell pwd)
-
-PYTEST ?= ${PYTHON} $(shell which pytest-3)
-TEST_OPTIONS ?= -xvvv --full-trace
-PYLINT_RC ?= .pylintrc
+PYTEST ?= pytest
+PYTEST_OPTIONS ?= -x
+TESTS ?= tests/
+CODE ?= $(subst -,/,$(PACKAGE))
 
 BUILD_DIR ?= build
 INPUT_DIR ?= docs/source
+
+RQ := grep -qs tool.ruff pyproject.toml
 
 # Sphinx options (are passed to build_docs, which passes them to sphinx-build)
 #   -W       : turn warning into errors
@@ -25,33 +22,77 @@ INPUT_DIR ?= docs/source
 #   -b html  : use html builder
 #   -i [pat] : ignore pattern
 
-SPHINXOPTS ?= -a -W -b html
-AUTOSPHINXOPTS := -i *~ -i *.sw* -i Makefile*
+ifneq ($(wildcard setup.py),)
+	SETUP := setup.py
+else
+	SETUP :=
+endif
 
-SPHINXBUILDDIR ?= $(BUILD_DIR)/sphinx/html
-ALLSPHINXOPTS ?= -d $(BUILD_DIR)/sphinx/doctrees $(SPHINXOPTS) docs
+it: untagged test push tag format deb pypi
+itt: untagged test push ttag format deb pypi
 
-doc:
-	sphinx3-build -a $(INPUT_DIR) $(BUILD_DIR)
+deb: tagged
+	merge-to-deb
+
+tag:
+	test $$(git ls-files -m | wc -l) = 0
+	git nt
+ttag:
+	test $$(git ls-files -m | wc -l) = 0
+	git ntt
 
 livehtml: docs
 	sphinx-autobuild $(AUTOSPHINXOPTS) $(ALLSPHINXOPTS) $(SPHINXBUILDDIR)
 
-test:
-	$(PYTEST) tests $(TEST_OPTIONS)
+update:
+	pip install -r ci/test-requirements.txt
 
+cov:
+	$(PYTEST) $(TESTS) --cov=$(CODE) --cov-report=term-missing
+
+test: statictest pytest
+statictest:
+	${RQ} || black --check $(CODE) $(TESTS) $(SETUP)
+	${RQ} || python3 -misort --check $(CODE) $(TESTS) $(SETUP)
+	${RQ} || flake8p $(CODE) $(TESTS) $(SETUP)
+	${RQ} || pylint $(CODE) $(TESTS) $(SETUP)
+	${RQ} && ruff format $(CODE) $(TESTS) $(SETUP)
+	${RQ} && ruff check $(CODE) $(TESTS) $(SETUP)
+
+pytest:
+	$(PYTEST) $(PYTEST_OPTIONS) $(TESTS)
+
+format:
+	${RQ} || black $(CODE) $(TESTS) $(SETUP)
+	${RQ} || python3 -misort $(CODE) $(TESTS) $(SETUP)
+	${RQ} && ruff format $(CODE) $(TESTS) $(SETUP)
+	${RQ} && ruff check --fix $(CODE) $(TESTS) $(SETUP)
+
+precommit: format test
 
 tagged:
 	git describe --tags --exact-match
 	test $$(git ls-files -m | wc -l) = 0
 
+untagged:
+	if git describe --tags --exact-match ; then exit 1; else exit 0; fi
+
 pypi:	tagged
-	python3 setup.py sdist upload
-	## version depends on tag, so re-tagging doesn't make sense
+	if test -f dist/${PYPI}-$(shell git describe --tags --exact-match).tar.gz ; then \
+		echo "Source package exists."; \
+	elif test -f setup.py ; then \
+		python3 setup.py sdist bdist_wheel ; \
+	else \
+		python3 -mbuild -snw ; \
+	fi
+	twine upload \
+		dist/$(subst -,_,${PYPI})-$(shell git describe --tags --exact-match).tar.gz \
+		dist/$(subst -,_,${PYPI})-$(shell git describe --tags --exact-match)-py3-none-any.whl
 
 upload: pypi
-	git push-all --tags
+	git push --tags
 
-update:
-	pip install -r ci/test-requirements.txt
+push:
+	git push-all
 
+.PHONY: all tagged pypi upload precommit format test cov update doc livehtml statictest pytest it deb tag untagged push ttag itt
