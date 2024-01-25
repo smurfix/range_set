@@ -1,8 +1,9 @@
 RangeSet
-======
+========
 
 License: Your choice of MIT or Apache License 2.0
 
+Rationale
 ---------
 
 Python Sets are nice to work with, but very inefficient if you need a large
@@ -10,7 +11,7 @@ set with mostly-consecutive integers. The RangeSet class provides efficient
 handling and storage for these sets.
 
 Non-integers?
-=============
+-------------
 
 RangeSet works with any class whose instances are
 
