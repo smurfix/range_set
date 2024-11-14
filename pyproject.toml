@@ -1,6 +1,47 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [ "setuptools", "wheel", "setuptools-scm",]
+
+[project]
+classifiers = [
+        "Intended Audience :: Developers",
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved",
+        "Development Status :: 5 - Production",
+        ]
+dependencies = [
+        ]
+dynamic = [ "version",]
+keywords = [ "integer ranges",]
+requires-python = ">=3.10"
+name = "range-set"
+description = "Comprehensive management of ranges of integers"
+readme = "README.md"
+
+[[project.authors]]
+email = "matthias@urlichs.de"
+name = "Matthias Urlichs"
+
 [tool.towncrier]
 package = "range_set"
 filename = "docs/source/history.rst"
 directory = "newsfragments"
 underlines = ["-", "~", "^"]
 issue_format = "`#{issue} <https://github.com/smurfix/range_set/issues/{issue}>`__"
+
+[tool.setuptools]
+packages = [ "range_set",]
+
+[tool.setuptools_scm]
+
+[tool.flake8]
+max-line-length=99
+ignore=E402,E731,E127,E502,E123,W503
+
+[testenv]
+setenv =
+    PYTHONPATH = {env:PYTHONPATH}{:}{toxinidir}
+deps =
+    pytest
+commands =
+    python3 -mpytest tests/
