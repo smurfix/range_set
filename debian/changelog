@@ -1,3 +1,9 @@
+range-set (0.3.3-1) unstable; urgency=medium
+
+  * Drop pkg_resources
+
+ -- Matthias Urlichs <matthias@urlichs.de>  Thu, 14 Nov 2024 14:57:06 +0100
+
 range-set (0.3.0-1) unstable; urgency=medium
 
   * Add __add__ and __iadd__.
