@@ -1,16 +1,12 @@
 """Top-level package for RangeSet."""
 
-try:
-    import pkg_resources  # part of setuptools
+from importlib.metadata import version  # part of setuptools
 
-    _version = pkg_resources.require("range_set")[0].version
-    del pkg_resources
+_version = version("range_set")
+del version
 
-    _version_tuple = tuple(int(x) for x in _version.split("."))
+_version_tuple = tuple(int(x) for x in _version.split("."))
 
-except Exception:
-    _version = "0.0.1"
-    _version_tuple = (0, 0, 1)
 
 
 
