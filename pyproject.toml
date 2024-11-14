@@ -8,14 +8,21 @@ classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved",
         "Development Status :: 5 - Production",
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Libraries",
         ]
 dependencies = [
         ]
 dynamic = [ "version",]
-keywords = [ "integer ranges",]
-requires-python = ">=3.10"
-name = "range-set"
-description = "Comprehensive management of ranges of integers"
+keywords = [
+    "set",
+    "coalesce",
+    "compact",
+    "consecutive",
+    ]
+requires-python = ">=3.8"
+name = "range_set"
+description = "Efficient storage for sets of mostly-consecutive integers",
 readme = "README.md"
 
 [[project.authors]]
